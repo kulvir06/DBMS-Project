@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>* {
+        box-sizing: border-box;
+      }
+      .terminal--list,
+      .terminal--list li {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      
+      .terminal {
+        width: 600px;
+        height: 300px;
+        background-color: #000000;
+        color: #ffffff;
+        font-family: monospace;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      
+      .terminal--log {
+        height: calc(100% - 40px);
+        overflow: auto;
+        padding: 10px;
+        border-top: 10px solid #000000;
+      }
+      
+      .terminal--cmd {
+        height: 40px;
+        padding: 10px;
+      }
+      
+      .terminal--cmd input {
+        background-color: #000000;
+        color: #ffffff;
+        border: none;
+        width: 90%;
+        height: 100%;
+        font-family: monospace;
+        font-size: 12px;
+        line-height: 1.4;
+        display: inline-block;
+        opacity: 0.7;
+      }
+      
+      .terminal--cmd form:before {
+        content: '> ';
+        color: #ffffff;
+      }</style>
+</head>
+<body>
+    <h1>Developer Options</h1>
+    <h2>Sql Terminal</h2>
+    <h3>Write a query in MySQL syntax and see the result on execution. <br><i>Important !!:: Any change made will affect the database</i></h3>
+
+    <div class="terminal">
+        <div class="terminal--log">
+          <ul class="terminal--list" id="js-terminal-cmd-list">
+              <!--<li>15 files changed, 0 insertions(+), 0 deletions(-)</li>
+              <li>rename btn-bg-btm-left.gif => school2003/btn-bg-btm-left.gif (100%)</li>
+              <li>rename btn-bg-btm-right.gif => school2003/btn-bg-btm-right.gif (100%)</li>
+              <li>rename btn-bg-btm.gif => school2003/btn-bg-btm.gif (100%)</li>
+              <li>rename btn-bg-top-left.gif => school2003/btn-bg-top-left.gif (100%)</li>
+              <li>rename btn-bg-top-right.gif => school2003/btn-bg-top-right.gif (100%)</li>
+              <li>rename btn-bg.gif => school2003/btn-bg.gif (100%)</li>
+              <li>rename btn.html => school2003/btn.html (100%)</li>
+              <li>rename counter.gif => school2003/counter.gif (100%)</li>
+              <li>rename gcses.gif => school2003/gcses.gif (100%)</li>
+              <li>rename header-bg.gif => school2003/header-bg.gif (100%)</li>
+              <li>rename index.html => school2003/index.html (100%)</li>
+              <li>rename index2.html => school2003/index2.html (100%)</li>
+              <li>rename logo.gif => school2003/logo.gif (100%)</li>
+              <li>rename placeholder.gif => school2003/placeholder.gif (100%)</li>
+              <li>rename sunbridge-photo.jpg => school2003/sunbridge-photo.jpg (100%)</li>-->
+          </ul>
+        </div>
+        <div class="terminal--cmd">
+          <form id="js-terminal" method="POST">
+            <input type="text"  name="query"/><br><br>
+            <button type="submit" formaction="http://localhost:3000/account/admin/query_result" >Run!</button>
+          </form>
+        </div>
+      </div><br><br>
+      <p>Note: The output generated will be in JSON form. Please use a JSON viewer extenstion for chrome.</p>
+    
+</body>
+<!-- <script>
+    var msgList = {
+    'closed': [
+        '01100011 01101100 01101111 01110011 01100101 01100100 00001101',
+        '01100100 01100101 01101110 01101001 01100101 01100100',
+        '01100100 01101001 01110011 01100001 01101100 01101100 01101111 01110111 01100101',
+        '01110000 01110010 01100101 01110110 01100101 01101110 01110100 01100101 01100100',
+        '01100010 01100001 01101110 01101110 01100101 01100100'
+    ],
+    'open2': '00001010 01101111 01110000 01100101 01101110',
+    'open': 'OPEN FOR BUSINESS'
+};
+
+var config = {
+    triggerStartCmd: 'begin',
+    triggerEndCmd: 'end',
+    hasBegun: false,
+    state: undefined,
+    $cmd: undefined,
+    int: undefined
+};
+
+var beginBinaryGate = function () {
+    var count = 0;
+    var loop = 300;
+    var loopOrig = loop;
+    config.$cmd = $('#js-special-cmd');
+
+    var func = function() {
+        window.clearInterval(config.int);
+        if (count === 4) {
+            config.$cmd.text(msgList.open);
+            config.state = 'open';
+            count = 0;
+            loop = loop * 2;
+        } else {
+            config.$cmd.text(msgList.closed[count]);
+            config.state = 'closed';
+            count++;
+            loop = loopOrig;
+        }
+        config.int = setInterval(func, loop);
+    };
+    config.int = window.setInterval(func, loop);
+};
+
+var endBinaryGate = function () {
+    window.clearInterval(config.int);
+    config.$cmd.text('ACCESS GRANTED');
+};
+
+var processInput = function(input) {
+    var list = $('#js-terminal-cmd-list');
+    var li = $('<li>' + input + '</li>');
+    var callback;
+
+    if (input === config.triggerStartCmd && config.hasBegun === false) {
+        li = $('<li id="js-special-cmd"></li>');
+        config.hasBegun = true;
+        callback = beginBinaryGate;
+    }
+
+    if (config.state === 'open' && input === config.triggerEndCmd) {
+        callback = endBinaryGate;
+    }
+
+    li.appendTo(list);
+    $('.terminal--log').scrollTop(1E10);
+    if (callback) { callback(); }
+};
+
+
+$('#js-terminal').submit(function(e) {
+    var input = $('#js-terminal-input');
+    processInput(input.val());
+    input.val('');
+    e.preventDefault();
+});
+
+</script> -->
+</html>

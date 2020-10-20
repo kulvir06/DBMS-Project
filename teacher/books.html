@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {    margin: 0;    padding: 0;    width: 100%;    height: 100%;    background: #2c3e50;    font-family: 'Montserrat', sans-serif;    font-size: 16px;  } 
+        body {  display: -webkit-box;    display: flex;    flex-wrap: wrap;    justify-content: space-around;    -webkit-box-align: center;            align-items: center;    align-content: center;  }   h1 {    color: #f1c40f;    font-size: 4rem;    text-transform: uppercase;    display: block;    width: 100%;    text-align: left;  } @media screen and (max-width: 600px) {    h1 {      font-size: 3rem;    }  }    p {    color: #f1c40f;    font-size: 1.2rem;    width: 100%;    padding: 20px;    text-align: left;  }
+         h3{color: #f1c40f;font-size:30px;    display: block;width: 100%;    text-align: left;}
+    </style>
+</head>
+<body>
+    <p>
+        <h1>Update Reference Book </h1>
+    <form action="http://localhost:3000/account/teacher/update_books" method="POST">
+        <input type="text" placeholder="Chapter Name" required="" name="chapter"><br><br>
+        <input type="text" placeholder="Book Name" required="" name ="book"><br><br>
+        <button type="submit" formaction="http://localhost:3000/account/teacher/uploaded_books">Update</button><br><br><br><br><br>
+        
+    </form>
+    </p>
+    
+    <p>
+    To update reference book copy the chapter name as given in the book list page and write the book name in the given dialogue box.
+        <form action="http://localhost:3000/account/teacher/update_books" method="POST">
+            <button formaction="http://localhost:3000/account/teacher/booklist">View Book List</button>       
+        </form>
+    </p>
+</body>
+</html>
